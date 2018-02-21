@@ -95,19 +95,34 @@ namespace Outil_Capture_HYDROS
         {
             int index = listBox1.SelectedIndex;
             string[] data = new string[6];
+            string error = "Capteur non disponible";
             data[0] = trames[index].IDTotem;
-            data[1] = trames[index].NumPaquet.ToString();
-            data[2] = string.Format("{0:N3} mm", trames[index].Data[0]);
-            data[3] = string.Format("{0:N2} °C", trames[index].Data[1]);
-            data[4] = string.Format("{0:N2} °C", trames[index].Data[3]);
-            data[5] = string.Format("{0} %", trames[index].Data[2]);
+            if (trames[index].CodeFonction == 0)
+            {
+                data[1] = trames[index].NumPaquet.ToString();
+                data[2] = string.Format("{0:N3} mm", trames[index].Data[0]);
+                data[3] = trames[index].Data[1] <= -127.00 ? string.Format("{0:N2} °C", trames[index].Data[1]) : error;
+                data[4] = trames[index].Data[3] != float.NaN ? string.Format("{0:N2} °C", trames[index].Data[3]) : error;
+                data[5] = trames[index].Data[2] != float.NaN ? string.Format("{0} %", trames[index].Data[2]) : error;
+
+                textBox6.Text = data[1];
+                textBox2.Text = data[2];
+                textBox3.Text = data[3];
+                textBox4.Text = data[4];
+                textBox5.Text = data[5];
+            }
+            else
+            {
+                // Updated later
+                string phrase = "Données d'image";
+                textBox6.Text = phrase;
+                textBox2.Text = phrase;
+                textBox3.Text = phrase;
+                textBox4.Text = phrase;
+                textBox5.Text = phrase;
+            }
 
             textBox1.Text = data[0];
-            textBox6.Text = data[1];
-            textBox2.Text = data[2];
-            textBox3.Text = data[3];
-            textBox4.Text = data[4];
-            textBox5.Text = data[5];
         }
 
         private void défilementAutoToolStripMenuItem_Click(object sender, EventArgs e)
