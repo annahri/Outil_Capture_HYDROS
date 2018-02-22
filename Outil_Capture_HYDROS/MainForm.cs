@@ -53,6 +53,7 @@ namespace Outil_Capture_HYDROS
                 trames.Add(new Trame(e.Data));
                 AppendOutput(listBox1, e.Data);
                 if(défilementAutoToolStripMenuItem.Checked) ScrollToBottom(listBox1);
+                toolStripStatusLabel3.Text = $"Trames capturées: {listBox1.Items.Count}";
             }
         }
 
@@ -80,6 +81,11 @@ namespace Outil_Capture_HYDROS
             }
         }
 
+        private void StatusCount(Label label, string text)
+        {
+            
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = "Connecté à " + COMport;
@@ -101,7 +107,7 @@ namespace Outil_Capture_HYDROS
             {
                 data[1] = trames[index].NumPaquet.ToString();
                 data[2] = string.Format("{0:N3} mm", trames[index].Data[0]);
-                data[3] = trames[index].Data[1] <= -127.00 ? string.Format("{0:N2} °C", trames[index].Data[1]) : error;
+                data[3] = string.Format("{0:N2} °C", trames[index].Data[1]);
                 data[4] = trames[index].Data[3] != float.NaN ? string.Format("{0:N2} °C", trames[index].Data[3]) : error;
                 data[5] = trames[index].Data[2] != float.NaN ? string.Format("{0} %", trames[index].Data[2]) : error;
 
